@@ -26,11 +26,11 @@ describe("POST /auth/register", () => {
                 password: "secret",
             };
             //Act
-            const reponse = await request(app)
+            const response = await request(app)
                 .post("/auth/register")
                 .send(userData);
             //Assert
-            expect(reponse.statusCode).toBe(201);
+            expect(response.statusCode).toBe(201);
         });
         it("should return valid json format", async () => {
             //Arrange
@@ -41,11 +41,11 @@ describe("POST /auth/register", () => {
                 password: "secret",
             };
             //Act
-            const reponse = await request(app)
+            const response = await request(app)
                 .post("/auth/register")
                 .send(userData);
             //Assert
-            expect(reponse.headers["content-type"]).toEqual(
+            expect(response.headers["content-type"]).toEqual(
                 expect.stringContaining("json"),
             );
         });
@@ -58,7 +58,7 @@ describe("POST /auth/register", () => {
                 password: "secret",
             };
             //Act
-            const reponse = await request(app)
+            const response = await request(app)
                 .post("/auth/register")
                 .send(userData);
             //Assert
@@ -68,6 +68,27 @@ describe("POST /auth/register", () => {
             expect(users[0].firstName).toBe(userData.firstName);
             expect(users[0].lastName).toBe(userData.lastName);
             expect(users[0].email).toBe(userData.email);
+        });
+        it("should return an id of the created user", async () => {
+            // Arrange
+            const userData = {
+                firstName: "Hamza",
+                lastName: "khan",
+                email: "expamle@gmail.com",
+                password: "secret",
+            };
+            // Act
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            expect(response.body).toHaveProperty("id");
+            const repository = connection.getRepository(User);
+            const users = await repository.find();
+            expect((response.body as Record<string, string>).id).toBe(
+                users[0].id,
+            );
         });
     });
     describe("Fields are missing", () => {});
