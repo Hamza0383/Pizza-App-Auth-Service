@@ -14,4 +14,8 @@ export default checkSchema({
         errorMessage: "firstname is required!",
         notEmpty: true,
     },
+    password: {
+        errorMessage: "firstname is required!",
+        notEmpty: true,
+    },
 });
