@@ -9,7 +9,7 @@ app.use("/auth", authRouter);
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
     const statusCode = err.statusCode || 500;
     res.status(statusCode).json({
-        error: [
+        errors: [
             {
                 type: err.name,
                 msg: err.message,
