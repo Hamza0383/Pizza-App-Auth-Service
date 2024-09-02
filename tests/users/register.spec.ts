@@ -131,6 +131,7 @@ describe("POST /auth/register", () => {
             expect(users[0].password).toMatch(/^\$2b\$\d+\$/);
         });
         it("should return 400 if email is already exist in database", async () => {
+            // Arrange
             const userData = {
                 firstName: "Hamza",
                 lastName: "khan",
@@ -152,6 +153,7 @@ describe("POST /auth/register", () => {
     });
     describe("Fields are missing", () => {
         it("should return 400 status code if email field is missing", async () => {
+            // Arrange
             const userData = {
                 firstName: "Hamza",
                 lastName: "khan",
@@ -166,6 +168,26 @@ describe("POST /auth/register", () => {
 
             // Assert
             expect(response.statusCode).toBe(400);
+        });
+    });
+    describe("Fields are not in proper format", () => {
+        it("should trim the email field", async () => {
+            // Arrange
+            const userData = {
+                firstName: "Hamza",
+                lastName: "khan",
+                email: " expamle@gmail.com ",
+                password: "secret",
+            };
+
+            // Act
+            await request(app).post("/auth/register").send(userData);
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+            const user = users[0];
+            expect(user.email).toBe("expamle@gmail.com");
         });
     });
 });
