@@ -11,7 +11,7 @@ export class UserService {
             where: { email: email },
         });
         if (user) {
-            const err = createHttpError(400, "email alreday exist!");
+            const err = createHttpError(400, "email is already exist!");
             throw err;
         }
         const saltRounds = 10;

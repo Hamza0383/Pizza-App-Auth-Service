@@ -130,7 +130,7 @@ describe("POST /auth/register", () => {
             expect(users[0].password).toHaveLength(60);
             expect(users[0].password).toMatch(/^\$2b\$\d+\$/);
         });
-        it("should return 400 if email is alreday exist in database", async () => {
+        it("should return 400 if email is already exist in database", async () => {
             const userData = {
                 firstName: "Hamza",
                 lastName: "khan",
