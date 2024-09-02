@@ -185,6 +185,22 @@ describe("POST /auth/register", () => {
             // Assert
             expect(response.statusCode).toBe(400);
         });
+        it("Should return 400 status code if lastName is missing", async () => {
+            const userData = {
+                firstName: "Hamza",
+                lastName: "",
+                email: "example@gmail.com",
+                password: "secret",
+            };
+
+            // Act
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            expect(response.statusCode).toBe(400);
+        });
     });
     describe("Fields are not in proper format", () => {
         it("should trim the email field", async () => {

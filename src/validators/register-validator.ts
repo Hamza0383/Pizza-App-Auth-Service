@@ -10,4 +10,8 @@ export default checkSchema({
         errorMessage: "firstname is required!",
         notEmpty: true,
     },
+    lastName: {
+        errorMessage: "firstname is required!",
+        notEmpty: true,
+    },
 });
